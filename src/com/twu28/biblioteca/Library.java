@@ -24,12 +24,31 @@ public class Library
         }
 
         public boolean hasName(Object bookName)
-        {    //TODO does this function violate Tell Don't ask requirement
-            return this.name.equals(bookName);  //To change body of created methods use File | Settings | File Templates.
+        {    
+            return this.name.equals(bookName);  
         }
+    }
+    
+    private class Person
+    {
+    	private String name;
+    	private int number;
+    	public Person(String personName, int maxNumber) 
+    	{
+    		this.name = personName;
+    		this.number = maxNumber;
+		}
+		public boolean hasName(Object personName) {
+			return this.name.equals(personName);
+		}
+		public int getNumber() {
+			return this.number;
+		}
     }
 
     private ArrayList bookList;
+    private ArrayList personList;
+    private static int maxNumber;
 
     public Library()
     {
@@ -39,10 +58,25 @@ public class Library
         bookList.add(new Book("book3", "author3"));
         bookList.add(new Book("book4", "author4"));
         bookList.add(new Book("book5", "author5"));
+        
+        maxNumber = 1;
+        personList = new ArrayList();
+        
+        this.addPerson("person1");
+        this.addPerson("person2");
+        this.addPerson("person3");
+        
+        
 
     }
     
-    public boolean reserveBookByBookName(Object bookName)
+    private void addPerson(String personName) 
+    {
+		personList.add(new Person(personName, this.maxNumber));
+		this.maxNumber++;
+	}
+
+	public boolean reserveBookByBookName(Object bookName)
     {
         if(bookName == null)
             throw new RuntimeException("Please provide a book name to search");
@@ -61,4 +95,17 @@ public class Library
         }
         return false;
     }
+
+	public int checkLibraryNumber(Object personName) 
+	{
+		if(personName == null)	throw new RuntimeException();
+		if(personName.getClass() != String.class)	throw new RuntimeException();
+		for(int idx = 0; idx < this.personList.size(); idx++)
+		{
+			Person person = (Person) this.personList.get(idx);
+			if(person.hasName(personName))
+				return person.getNumber();
+		}
+		throw new RuntimeException("Please Talk To Librarian");
+	}
 }

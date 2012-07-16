@@ -41,4 +41,37 @@ public class LibraryTest
         Library library = new Library();
         Assert.assertTrue(library.reserveBookByBookName("book3"));
     }
+    
+    @Test (expected = Exception.class)
+    public void testCheckLibraryNumberIfPersonNameIsNull()
+    {
+    	Library library = new Library();
+    	library.checkLibraryNumber(null);
+    	
+    }
+    
+    @Test (expected = Exception.class)
+    public void testCheckLibraryNumberIfLibraryNumberIfPersonNameIsNotString()
+    {
+    	Library library = new Library();
+    	library.checkLibraryNumber(5);
+    	
+    }
+    
+    @Test (expected = Exception.class)
+    public void testCheckLibraryNumberIfLibraryNumberIfPersonNameDoesNotExist()
+    {
+    	Library library = new Library();
+    	library.checkLibraryNumber("i am person");
+    	
+    }
+    
+    @Test 
+    public void testCheckLibraryNumberIfLibraryNumberIfPersonNameExists()
+    {
+    	Library library = new Library();
+    	Assert.assertEquals(1, library.checkLibraryNumber("person1"));
+    	
+    }
+    
 }
