@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class Options
 {
-	private ArrayList list;
+	private ArrayList<String> list;
 	public Options()
 	{
-		list = new ArrayList();
+		list = new ArrayList<String>();
 		list.add("List all Books");
 		list.add("Reserve Book By Book Name");
 		list.add("Reserve Book By Author Name");

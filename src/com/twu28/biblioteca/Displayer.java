@@ -12,9 +12,13 @@ public class Displayer
 		this.displayOptions(options.getListOfOptions());
 	}
 
-	private void displayOptions(List options) 
+	private void displayOptions(List<String> options) 
 	{
-		
+		int optionNumber = 1;
+		for(String option:options)
+		{
+			System.out.println(optionNumber + option);
+		}
 	}
 
 	private void displayWelcomeMessage() 
