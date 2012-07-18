@@ -4,32 +4,47 @@ import junit.framework.Assert;
 import org.junit.Test;
 public class OptionsTest 
 {
-	@Test (expected = RuntimeException.class)
-	public void validateOptionIfOptionChoiceAsNull()
+	@Test 
+	public void optionIsNotValidIfItIsNull()
 	{
 		Options options = new Options();
-		options.validateOption(null);
+		Assert.assertFalse(options.isValidOption(null));
 	}
 	
-	@Test (expected = RuntimeException.class)
-	public void validateOptionIfOptionChoiceIsNotInteger()
+	@Test (expected = Exception.class)
+	public void optionIsNotValidIfItIsNotInteger()
 	{
 		Options options = new Options();
-		options.validateOption("1");
-	}
-	
-	@Test (expected = RuntimeException.class)
-	public void validateOptionIfOptionIsNotFromGivenOptions()
-	{
-		Options options = new Options();
-		options.validateOption(-1);
+		options.isValidOption("abc");
 	}
 	
 	@Test 
-	public void validateOptionIfOptionIsFromGivenOptions()
+	public void optionIsNotValidIfItIsNotWithinOptionsRange()
 	{
 		Options options = new Options();
-		options.validateOption(3);
+		options.isValidOption("-1");
+		
+	}
+	
+	@Test
+	public void optionNo1IsFromGivenOptions()
+	{
+		Options options = new Options();
+		Assert.assertFalse(options.isOptionNotFromGivenOptions(1));
+	}
+	
+	@Test
+	public void optionNo5IsFromGivenOptions()
+	{
+		Options options = new Options();
+		Assert.assertTrue(options.isOptionNotFromGivenOptions(5));
+	}
+	
+	@Test 
+	public void optionIsValidIfItIsWithinOptionsRange()
+	{
+		Options options = new Options();
+		options.isValidOption("3");
 	}
 	
 }

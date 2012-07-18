@@ -1,27 +1,33 @@
 package com.twu28.biblioteca;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Options
 {
-	private ArrayList<String> list;
+	private List<String> list;
 	public Options()
 	{
 		list = new ArrayList<String>();
 		list.add("List all Books");
-		list.add("Reserve Book By Book Name");
-		list.add("Reserve Book By Author Name");
+		list.add("Reserve Book");
 		list.add("Check Library Number");
 	}
-	public void validateOption(Object object) 
+	public boolean isValidOption(String option) 
 	{
-		if(object == null) throw new RuntimeException("Please provide a valid option");
-		if(object.getClass() != Integer.class) throw new RuntimeException("Please provide a valid option");
-		if(((Integer)object < 1) || ((Integer)object > this.list.size())) throw new RuntimeException("Please provide a valid option");
+		if(option == null) return false;
+		int optionIndex = Integer.parseInt(option) - 1;
+		if(isOptionNotFromGivenOptions(optionIndex)) return false;
+		return true;
 	}
 
-	public ArrayList getListOfOptions() {
-		
+	public List getListOfOptions() 
+	{
 		return this.list;
+	}
+	public boolean isOptionNotFromGivenOptions(int optionIndex) 
+	{
+		
+		return ((optionIndex < 0) || (optionIndex > (list.size() - 1)));
 	}
 }

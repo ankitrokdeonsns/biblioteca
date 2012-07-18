@@ -2,6 +2,7 @@ package com.twu28.biblioteca;
 
 import java.awt.print.Book;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,100 +13,104 @@ import java.util.ArrayList;
  */
 public class Library
 {
-    private class Book
-    {
-        private String name;
-        private String authorName;
-
-        public Book(String bookName, String authorName)
-        {
-            this.name = bookName;
-            this.authorName = authorName;
-        }
-
-        public boolean hasName(Object bookName)
-        {    
-            return this.name.equals(bookName);  
-        }
-    }
+        
     
-    private class Person
-    {
-    	private String name;
-    	private int number;
-    	public Person(String personName, int maxNumber) 
-    	{
-    		this.name = personName;
-    		this.number = maxNumber;
-		}
-		public boolean hasName(Object personName) {
-			return this.name.equals(personName);
-		}
-		public int getNumber() {
-			return this.number;
-		}
-    }
 
-    private ArrayList bookList;
-    private ArrayList personList;
+    private List<LibraryBook> bookList;
+    private List<Person> personList;
+	private List<LibraryBook> reservedBookList;
     private static int maxNumber;
 
     public Library()
     {
-        bookList = new ArrayList();
-        bookList.add(new Book("book1", "author1"));
-        bookList.add(new Book("book2", "author2"));
-        bookList.add(new Book("book3", "author3"));
-        bookList.add(new Book("book4", "author4"));
-        bookList.add(new Book("book5", "author5"));
+        bookList = new ArrayList<LibraryBook>();
+        bookList.add(new LibraryBook("book1"));
+        bookList.add(new LibraryBook("book2"));
+        bookList.add(new LibraryBook("book3"));
+        bookList.add(new LibraryBook("book4"));
+        bookList.add(new LibraryBook("book5"));
         
         maxNumber = 1;
-        personList = new ArrayList();
+        personList = new ArrayList<Person>();
         
-        this.addPerson("person1");
-        this.addPerson("person2");
-        this.addPerson("person3");
+        personList.add(new Person("person1", maxNumber++));
+        personList.add(new Person("person2", maxNumber++));
+        personList.add(new Person("person3", maxNumber++));
+        
+        reservedBookList = new ArrayList<LibraryBook>();
         
         
 
     }
     
-    private void addPerson(String personName) 
-    {
-		personList.add(new Person(personName, this.maxNumber));
-		this.maxNumber++;
-	}
-
-	public boolean reserveBookByBookName(Object bookName)
-    {
-        if(bookName == null)
-            throw new RuntimeException("Please provide a book name to search");
-        if(!bookName.getClass().equals(String.class))
-            return false;
-        return this.searchForBookUsingBookName(bookName);
-    }
-
-    private boolean searchForBookUsingBookName(Object bookName)
-    {
-        for(int idx = 0;idx < bookList.size();idx++)
-        {
-            Book book = (Book) bookList.get(idx);
-            if(book.hasName(bookName))
-                return true;
-        }
-        return false;
-    }
-
-	public int checkLibraryNumber(Object personName) 
+    
+    
+	public int checkLibraryNumber(String personName) 
 	{
 		if(personName == null)	throw new RuntimeException();
-		if(personName.getClass() != String.class)	throw new RuntimeException();
 		for(int idx = 0; idx < this.personList.size(); idx++)
 		{
 			Person person = (Person) this.personList.get(idx);
-			if(person.hasName(personName))
+			if(person.getName().equals(personName))
 				return person.getNumber();
 		}
 		throw new RuntimeException("Please Talk To Librarian");
+	}
+
+	public List<LibraryBook> getBookList() {
+		return this.bookList;
+	}
+
+	public void reserveBook(String  bookName) 
+	{
+		if(bookName == null) 
+		{
+			System.out.println("Sorry the book does not exist");
+			throw new RuntimeException("Book does not exist");
+		}
+		for(LibraryBook book: this.bookList)
+        {
+            if(book.getName().equalsIgnoreCase(bookName))
+            {
+                if(this.isBookReserved(bookName)) 
+            	{
+                	System.out.println("Sorry the book is already reserved");
+                	throw new RuntimeException("Book is alsready Reserved");
+            	}
+                this.reservedBookList.add(book);
+                System.out.println("Congratulations you have the book");
+                return;
+            }
+        }
+        throw new RuntimeException("Book does not exist");
+		
+	}
+
+	public boolean isBookReserved(String bookName) 
+	{
+		for(LibraryBook book: this.reservedBookList)
+        {
+            if(book.getName().equalsIgnoreCase(bookName))
+            {
+                return true;
+            }
+        }
+		return false;
+	}
+
+
+
+	public void returnBook(String bookName) 
+	{
+		for(LibraryBook book: this.reservedBookList)
+        {
+            if(book.getName().equalsIgnoreCase(bookName))
+            {
+            	this.reservedBookList.remove(book);
+                return;
+            }
+        }
+		throw new RuntimeException();
+		
 	}
 }

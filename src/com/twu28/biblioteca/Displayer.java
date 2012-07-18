@@ -3,26 +3,56 @@ package com.twu28.biblioteca;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Displayer 
+public class Displayer implements IPrinter 
 {
-	public void displayWelcomeScreen() 
+
+	@Override
+	public void print(String string)
 	{
-		this.displayWelcomeMessage();
-		Options options = new Options();
-		this.displayOptions(options.getListOfOptions());
+		System.out.print(string);
 	}
 
-	private void displayOptions(List<String> options) 
+	@Override
+	public void println(String string)
 	{
-		int optionNumber = 1;
-		for(String option:options)
-		{
-			System.out.println(optionNumber + option);
-		}
+		System.out.println(string);
 	}
 
-	private void displayWelcomeMessage() 
+	public void displayWelcomeMessage() 
 	{
 		System.out.println("Welcome");
+		
 	}
+
+	public void displayOptionsList(Options options) 
+	{
+		List<String> listOfOptions = options.getListOfOptions();
+		int index = 1;
+		for(String option: listOfOptions)
+		{
+			System.out.println(index + ". " + option);
+			index++;
+		}
+		
+	}
+
+	public void displayBookList(Library library)  
+	{
+		List<LibraryBook> bookList = library.getBookList();
+		int index = 1;
+		for(LibraryBook book: bookList)
+		{
+			System.out.println(index + ". " + book.getName());
+			index++;
+		}
+		
+	}
+
+	public void displayMessage(String message) 
+	{
+		System.out.println(message);
+		
+	}
+	
+
 }
