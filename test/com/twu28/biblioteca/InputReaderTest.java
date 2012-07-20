@@ -1,7 +1,9 @@
 package com.twu28.biblioteca;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.StringReader;
 
 import junit.framework.Assert;
 

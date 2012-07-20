@@ -55,16 +55,10 @@ public class Library
     
     
     
-	public int checkLibraryNumber(String personName) 
+	public void checkLibraryNumber(String personName)
 	{
 		if(personName == null)	throw new RuntimeException();
-		for(int idx = 0; idx < this.personList.size(); idx++)
-		{
-			Person person = (Person) this.personList.get(idx);
-			if(person.getName().equals(personName))
-				return person.getNumber();
-		}
-		throw new RuntimeException("Please Talk To Librarian");
+        System.out.println("Please talk to Librarian. Thank you.");
 	}
 
 	public List<LibraryBook> getBookList() {
@@ -80,22 +74,22 @@ public class Library
 		}
 		for(LibraryBook book: this.bookList)
         {
-            if(book.getName().equalsIgnoreCase(bookName))
+            if(book.hasName(bookName))
             {
-                if(this.isBookReserved(bookName)) 
+                if(book.isReserved())
             	{
-                	System.out.println("Sorry the book is already reserved");
-                	throw new RuntimeException("Book is alsready Reserved");
+                	System.out.println("Sorry we don't have that book yet.");
+                	return;
             	}
-                this.reservedBookList.add(book);
-                System.out.println("Congratulations you have the book");
+                book.reserve();
+                System.out.println("Thank You! Enjoy the book.");
                 return;
             }
         }
         throw new RuntimeException("Book does not exist");
 		
 	}
-
+    /*
 	public boolean isBookReserved(String bookName) 
 	{
 		for(LibraryBook book: this.reservedBookList)
@@ -123,7 +117,7 @@ public class Library
 		throw new RuntimeException();
 		
 	}
-
+    */
     public List<Movie> getMovieList()
     {
         return this.movieList;
@@ -134,5 +128,16 @@ public class Library
 
         if(userMap.get(username).equals(password))   return "logged in";
         return "talk to librarian";
+    }
+
+    public void displayBookList()
+    {
+        int index = 1;
+        for(LibraryBook book: this.bookList)
+        {
+            System.out.print(index + ". ");
+            book.displayInfo();
+            index++;
+        }
     }
 }

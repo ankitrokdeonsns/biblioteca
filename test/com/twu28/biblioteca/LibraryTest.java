@@ -19,36 +19,54 @@ public class LibraryTest
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outputStream));
 		Library library = new Library();
-		Displayer displayer = new Displayer();
-		displayer.displayBookList(library);
+		library.displayBookList();
 		Assert.assertEquals("1. book1\n2. book2\n3. book3\n4. book4\n5. book5\n", outputStream.toString());
 		
 	}
-	
+
 	@Test
-	public void bookShouldNotBeReservedAlready()
-	{
-		Library library = new Library();
-		Assert.assertFalse(library.isBookReserved("book1"));
-	}
-	
-	@Test 
-	public void bookShouldBeReserveBookIfNotAlreadyReserved()
-	{
-		Library library = new Library();
-		Assert.assertFalse(library.isBookReserved("book1"));
+	public void shouldbeAbleToReserveBook() throws IOException
+    {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        Library library = new Library();
 		library.reserveBook("book1");
-		Assert.assertTrue(library.isBookReserved("book1"));
+
+        Assert.assertEquals("Thank You! Enjoy the book.\n", outputStream.toString());
+        outputStream.flush();
+        outputStream.close();
 	}
-	
-	@Test (expected = Exception.class)
-	public void reserveBookShouldThrowExceptionIfBookIsAlreadyReserved()
-	{
-		Library library = new Library();
+
+	@Test
+	public void bookShouldNotBeReservedIfAlreadyReserved() throws IOException
+    {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        Library library = new Library();
 		library.reserveBook("book1");
-		library.reserveBook("book1");
+        outputStream.reset();
+        library.reserveBook("book1");
+        Assert.assertEquals("Sorry we don't have that book yet.\n", outputStream.toString());
+        outputStream.flush();
+        outputStream.close();
 	}
-	
+
+    @Test
+    public void shouldBeAbleToCheckLibraryNumber() throws IOException
+    {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        Library library = new Library();
+        library.checkLibraryNumber("person1");
+        Assert.assertEquals("Please talk to Librarian. Thank you.\n", outputStream.toString());
+        outputStream.flush();
+        outputStream.close();
+
+    }
+
 	@Test (expected = Exception.class)
 	public void reserveBookShouldThrowExceptionIfBookIsNotInLibrary()
 	{
@@ -77,68 +95,7 @@ public class LibraryTest
     {
     	Library library = new Library();
     	library.checkLibraryNumber("i am person");
-    	
-    }
-	
-	@Test 
-    public void libraryNumberShouldBeReturnedIfPersonExists()
-    {
-    	Library library = new Library();
-    	Assert.assertEquals(1111111, library.checkLibraryNumber("person1"));
-    	
-    }
-	
-	@Test
-	public void bookShouldNotRemainReservedWhenReturned()
-	{
-		Library library = new Library();
-		library.reserveBook("book1");
-		Assert.assertTrue(library.isBookReserved("book1"));
-		library.returnBook("book1");
-		Assert.assertFalse(library.isBookReserved("book1"));
-	}
-	
-	@Test
-	public void shouldReturnBookIfAlreadyIssued()
-	{
-		Library library = new Library();
-		library.reserveBook("book1");
-		library.returnBook("book1");
-		Assert.assertFalse(library.isBookReserved("book1"));
-	}
-	
-	@Test (expected = Exception.class)
-	public void returnBookShouldThrowExceptionkIfBookIsNotAlreadyIssued()
-	{
-		Library library = new Library();
-		library.returnBook("book1");
-		
-	}
-
-    @Test
-    public void shouldDisplayNAForMoviesWithNoRating()
-    {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-        Library library = new Library();
-        Displayer displayer = new Displayer();
-        displayer.displayMovieList(library);
-        Assert.assertEquals("1. movie1 director1 ***\n2. movie2 director2 N/A\n", outputStream.toString());
     }
 
-    @Test
-    public void shouldBeAbleToLoginUser() throws IOException
-    {
-
-        Library library = new Library();
-        Assert.assertEquals("logged in", library.login(1111111, "person1"));
-    }
-
-    @Test
-    public void shouldNotBeAbleToLoginUser() throws IOException
-    {
-        Library library = new Library();
-        Assert.assertEquals("talk to librarian", library.login(1111111, "person"));
-    }
 	
 }

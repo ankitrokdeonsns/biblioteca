@@ -1,6 +1,5 @@
 package com.twu28.biblioteca;
 
-import java.io.Console;
 import java.io.IOException;
 
 public class main 
@@ -34,7 +33,7 @@ public class main
 			}while(!optionIsValid);
 			try
 			{
-				processChoice(displayer, options, reader, library, choice);
+				//processChoice(displayer, options, reader, library, choice);
 			}
 			catch(RuntimeException exception)
 			{
@@ -43,7 +42,7 @@ public class main
 		}
 		
 	}
-
+    /*
 	private static void processChoice(Displayer displayer, Options options, InputReader reader, Library library, String choice) throws IOException
     {
 		switch(Integer.parseInt(choice))
@@ -103,5 +102,5 @@ public class main
 			
 		}
 		
-	}
+	}*/
 }

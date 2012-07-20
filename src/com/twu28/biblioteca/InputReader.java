@@ -4,10 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class InputReader implements IReader 
+public class InputReader
 {
 
-	@Override
+
 	public String readLine() throws IOException 
 	{
 		// TODO Auto-generated method stub
