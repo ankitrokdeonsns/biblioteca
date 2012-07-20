@@ -29,7 +29,7 @@ public class main
 				}
 				catch(RuntimeException exception)
 				{
-					displayer.displayMessage(exception.toString() );
+					displayer.displayMessage(exception.toString());
 				}
 			}while(!optionIsValid);
 			try
@@ -44,8 +44,8 @@ public class main
 		
 	}
 
-	private static void processChoice(Displayer displayer, Options options, InputReader reader, Library library, String choice) 
-	{
+	private static void processChoice(Displayer displayer, Options options, InputReader reader, Library library, String choice) throws IOException
+    {
 		switch(Integer.parseInt(choice))
 		{
 			case 1:
@@ -81,6 +81,25 @@ public class main
 				}
 				break;
 			}
+            case 4:
+            {
+                displayer.displayMovieList(library);
+                break;
+            }
+            case 5:
+            {
+                displayer.displayMessage("Please Enter Username: ");
+                String username = reader.readLine();
+                displayer.displayMessage("Please Enter Password: ");
+                String password = reader.readLine();
+                System.out.println(library.login(Integer.parseInt(username), password));
+                break;
+            }
+            case 6:
+            {
+                System.exit(0);
+                break;
+            }
 			
 		}
 		

@@ -37,7 +37,7 @@ public class OptionsTest
 	public void optionNo5IsFromGivenOptions()
 	{
 		Options options = new Options();
-		Assert.assertTrue(options.isOptionNotFromGivenOptions(5));
+		Assert.assertTrue(options.isOptionNotFromGivenOptions(-1));
 	}
 	
 	@Test 

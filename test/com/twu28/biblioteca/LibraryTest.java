@@ -1,6 +1,8 @@
 package com.twu28.biblioteca;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
 
@@ -82,7 +84,7 @@ public class LibraryTest
     public void libraryNumberShouldBeReturnedIfPersonExists()
     {
     	Library library = new Library();
-    	Assert.assertEquals(1, library.checkLibraryNumber("person1"));
+    	Assert.assertEquals(1111111, library.checkLibraryNumber("person1"));
     	
     }
 	
@@ -112,5 +114,31 @@ public class LibraryTest
 		library.returnBook("book1");
 		
 	}
+
+    @Test
+    public void shouldDisplayNAForMoviesWithNoRating()
+    {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        Library library = new Library();
+        Displayer displayer = new Displayer();
+        displayer.displayMovieList(library);
+        Assert.assertEquals("1. movie1 director1 ***\n2. movie2 director2 N/A\n", outputStream.toString());
+    }
+
+    @Test
+    public void shouldBeAbleToLoginUser() throws IOException
+    {
+
+        Library library = new Library();
+        Assert.assertEquals("logged in", library.login(1111111, "person1"));
+    }
+
+    @Test
+    public void shouldNotBeAbleToLoginUser() throws IOException
+    {
+        Library library = new Library();
+        Assert.assertEquals("talk to librarian", library.login(1111111, "person"));
+    }
 	
 }

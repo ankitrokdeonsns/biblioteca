@@ -12,6 +12,9 @@ public class Options
 		list.add("List all Books");
 		list.add("Reserve Book");
 		list.add("Check Library Number");
+        list.add("Display Movie List");
+        list.add("Login");
+        list.add("Exit");
 	}
 	public boolean isValidOption(String option) 
 	{

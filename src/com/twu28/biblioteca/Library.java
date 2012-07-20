@@ -2,7 +2,9 @@ package com.twu28.biblioteca;
 
 import java.awt.print.Book;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,6 +22,8 @@ public class Library
     private List<Person> personList;
 	private List<LibraryBook> reservedBookList;
     private static int maxNumber;
+    private List<Movie> movieList;
+    private Map<Integer, String> userMap;
 
     public Library()
     {
@@ -33,14 +37,20 @@ public class Library
         maxNumber = 1;
         personList = new ArrayList<Person>();
         
-        personList.add(new Person("person1", maxNumber++));
-        personList.add(new Person("person2", maxNumber++));
-        personList.add(new Person("person3", maxNumber++));
+        personList.add(new Person("person1", 1111111, "person1"));
+        personList.add(new Person("person2", 1111112, "person2"));
+        personList.add(new Person("person3", 1111113, "person3"));
         
         reservedBookList = new ArrayList<LibraryBook>();
         
-        
+        movieList = new ArrayList<Movie>();
+        movieList.add(new Movie("movie1", "director1", 3));
+        movieList.add(new Movie("movie2", "director2", 0));
 
+        this.userMap = new HashMap<Integer, String>();
+        userMap.put(1111111, "person1");
+        userMap.put(1111112, "person2");
+        userMap.put(1111113, "person3");
     }
     
     
@@ -113,4 +123,16 @@ public class Library
 		throw new RuntimeException();
 		
 	}
+
+    public List<Movie> getMovieList()
+    {
+        return this.movieList;
+    }
+
+    public String login(int username, String password)
+    {
+
+        if(userMap.get(username).equals(password))   return "logged in";
+        return "talk to librarian";
+    }
 }

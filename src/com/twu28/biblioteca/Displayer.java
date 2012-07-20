@@ -53,6 +53,16 @@ public class Displayer implements IPrinter
 		System.out.println(message);
 		
 	}
-	
 
+
+    public void displayMovieList(Library library)
+    {
+        List<Movie> movieList = library.getMovieList();
+        int index = 1;
+        for(Movie movie: movieList)
+        {
+            System.out.println(index + ". " + movie.getName() + " " +movie.getDirector() + " " +movie.getRating());
+            index++;
+        }
+    }
 }

@@ -4,10 +4,12 @@ public class Person
 {    
 	private String name;
 	private int number;
-	public Person(String personName, int maxNumber) 
+    private String password;
+	public Person(String personName, int maxNumber, String password)
 	{
 		this.name = personName;
 		this.number = maxNumber;
+        this.password = password;
 	}
 	public String getName()
 	{

@@ -28,6 +28,6 @@ public class DisplayerTest
 		Displayer displayer = new Displayer();
 		Options options = new  Options();
 		displayer.displayOptionsList(options);
-		Assert.assertEquals("1. List all Books\n2. Reserve Book\n3. Check Library Number\n", outputStream.toString());
+		Assert.assertEquals("1. List all Books\n2. Reserve Book\n3. Check Library Number\n4. Display Movie List\n5. Login\n6. Exit\n", outputStream.toString());
 	}
 }
