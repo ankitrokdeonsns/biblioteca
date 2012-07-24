@@ -21,22 +21,13 @@ public class Movie
         this.rating = rating;
     }
 
-    public String getName()
+    public void displayInfo()
     {
-        return this.name;
-    }
-
-    public String getDirector()
-    {
-        return this.directorName;
-    }
-
-    public String getRating()
-    {
-        if(this.rating == 0)    return "N/A";
-        String ratingString = "";
-        for(int idx = 0; idx < this.rating; idx++)
-            ratingString+="*";
-        return ratingString;
+        System.out.print(this.name + " " + this.directorName + " ");
+        for(int index = 0; index < this.rating; index++)
+            System.out.print("*");
+        if(this.rating == 0)
+            System.out.print("N/A");
+        System.out.println();
     }
 }

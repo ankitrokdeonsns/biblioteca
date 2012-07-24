@@ -53,19 +53,6 @@ public class LibraryTest
         outputStream.close();
 	}
 
-    @Test
-    public void shouldBeAbleToCheckLibraryNumber() throws IOException
-    {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-
-        Library library = new Library();
-        library.checkLibraryNumber("person1");
-        Assert.assertEquals("Please talk to Librarian. Thank you.\n", outputStream.toString());
-        outputStream.flush();
-        outputStream.close();
-
-    }
 
 	@Test (expected = Exception.class)
 	public void reserveBookShouldThrowExceptionIfBookIsNotInLibrary()
@@ -81,20 +68,89 @@ public class LibraryTest
         Library library = new Library();
         library.reserveBook(null);
     }
-	
-	@Test (expected = Exception.class)
-    public void checkLibraryNumberShouldThrowExceptionIfPersonNameIsNull()
+
+
+
+
+    @Test
+    public void shouldDisplayMovieList()
     {
-    	Library library = new Library();
-    	library.checkLibraryNumber(null);
-    	
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        Library library = new Library();
+        library.displayMovieList();
+        Assert.assertEquals("1. movie1 director1 ***\n2. movie2 director2 N/A\n", outputStream.toString());
+
     }
-	
-	@Test (expected = Exception.class)
-    public void checkLibraryNumberShouldThrowExceptionIfPersonDoesNotExist()
+
+    @Test
+    public void shouldBeAbleToLoginuser()
     {
-    	Library library = new Library();
-    	library.checkLibraryNumber("i am person");
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        Library library = new Library();
+        library.logIn("111-1111", "person1");
+        Assert.assertEquals("Login successful.\n", outputStream.toString());
+        User user = new User("111-1111");
+        Assert.assertTrue(library.isUserLoggedIn(user));
+    }
+
+    @Test
+    public void shouldNotBeAbleToLoginuserForIncorrectPassword()
+    {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        Library library = new Library();
+        library.logIn("111-1111", "person");
+        Assert.assertEquals("Please provide proper username-password pair.\n", outputStream.toString());
+    }
+
+    @Test
+    public void libraryNumberShouldBeDisplayedIfUserLoggedIn()
+    {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        User user = new User("111-1111");
+        Library library = new Library();
+        library.logIn("111-1111", "person1");
+        outputStream.reset();
+        library.checkLibraryNumber(user);
+        Assert.assertEquals("111-1111\n", outputStream.toString());
+
+    }
+
+    @Test
+    public void messageShouldBeDisplayedIfUserNotLoggedIn()
+    {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        User user = new User("111-1111");
+        Library library = new Library();
+        library.checkLibraryNumber(user);
+        Assert.assertEquals("Please talk to Librarian. Thank you.\n", outputStream.toString());
+
+    }
+
+    @Test
+    public void userShouldBeLoggedIn()
+    {
+        User user = new User("111-1111");
+        Library library = new Library();
+        library.logIn("111-1111", "person1");
+        Assert.assertTrue(library.isUserLoggedIn(user));
+    }
+
+    @Test
+    public void userShouldBeLoggedOut()
+    {
+        User user = new User("111-1111");
+        Library library = new Library();
+        library.logIn("111-1111", "person1");
+        library.logOut(user);
+        Assert.assertFalse(library.isUserLoggedIn(user));
+
     }
 
 	

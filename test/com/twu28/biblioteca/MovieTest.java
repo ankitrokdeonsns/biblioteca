@@ -3,6 +3,9 @@ package com.twu28.biblioteca;
 import junit.framework.Assert;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 /**
  * Created with IntelliJ IDEA.
  * User: ankit
@@ -12,31 +15,29 @@ import org.junit.Test;
  */
 public class MovieTest
 {
+
     @Test
-    public void shouldMatchMovieName()
+    public void shouldDisplayMovieInfoWithRating()
     {
-        Movie movie = new Movie("movie", "director", 5);
-        Assert.assertEquals("movie", movie.getName());
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        Movie movie = new Movie("movie", "director", 3);
+        movie.displayInfo();
+
+        Assert.assertEquals("movie director ***\n", outputStream.toString());
     }
 
     @Test
-    public void shouldMatchDirectorName()
+    public void shouldDisplayMovieInfoWithNoRating()
     {
-        Movie movie = new Movie("movie", "director", 5);
-        Assert.assertEquals("director", movie.getDirector());
-    }
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
 
-    @Test
-    public void shouldMatchRating()
-    {
-        Movie movie = new Movie("movie", "director", 5);
-        Assert.assertEquals("*****", movie.getRating());
-    }
-
-    @Test
-    public void shouldMatchNAForNoRating()
-    {
         Movie movie = new Movie("movie", "director", 0);
-        Assert.assertEquals("N/A", movie.getRating());
+        movie.displayInfo();
+
+        Assert.assertEquals("movie director N/A\n", outputStream.toString());
     }
+
 }

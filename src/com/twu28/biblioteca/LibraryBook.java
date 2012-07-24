@@ -13,20 +13,7 @@ public class LibraryBook
         this.name = bookName;
         this.reserved = false;
     }
-    /*
-    @Override
-    public boolean equals(Object book)
-    {
-    	if(book == null)	return false;
-    	if(book.getClass() != this.getClass())	return false;
-    	if(((LibraryBook)book).name != this.name)	return false;
-    	return true;
-    }
-    public String getName()
-    {    
-        return this.name;  
-    }
-    */
+
     public void displayInfo()
     {
         System.out.println(this.name);
