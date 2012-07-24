@@ -13,7 +13,7 @@ public class User
     @Override
     public boolean equals(Object user)
     {
-        if(user == null)    return false;
+        if(user == null)    throw new RuntimeException("user is null");
         if(this.getClass() != user.getClass())  return false;
         return this.userName.equals(((User)user).getUserName());
     }

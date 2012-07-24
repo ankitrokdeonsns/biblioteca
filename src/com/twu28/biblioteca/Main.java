@@ -4,17 +4,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class main 
+public class Main
 {
-	public static void main(String[] args) throws IOException
+    private boolean isUserLoggedIn;
+
+
+    public static void main(String[] args) throws IOException
 	{
+        Main main = new Main();
         displayWelcomeMessage();
         BiblioTecaMenu menu;
         Library library = new Library();
-        boolean isUserLoggedIn = false;
+        User currentUser = null;
+        main.userLoggedOut();
         while (true)
         {
-            if(isUserLoggedIn)
+            if(main.isUserLoggedIn())
                 menu = BiblioTecaMenu.loggedIn();
             else
                 menu = BiblioTecaMenu.loggedOut();
@@ -26,8 +31,9 @@ public class main
             {
 
                 int optionNo = Integer.parseInt(option);
+
                 if(menu.isValidOption(optionNo))
-                    isUserLoggedIn = menu.processOption(menu, optionNo, inputReader, library,isUserLoggedIn);
+                    currentUser = menu.processOption(main, optionNo, inputReader, library, currentUser);
             }
             catch (Exception ignoreException)
             {}
@@ -38,4 +44,23 @@ public class main
     {
         System.out.println("Welcome!");
     }
+
+    public void userLoggedIn()
+    {
+        this.isUserLoggedIn = true;
+    }
+
+    public void userLoggedOut()
+    {
+        isUserLoggedIn = false;
+    }
+
+    public boolean isUserLoggedIn()
+    {
+        return isUserLoggedIn;
+    }
+
+
+
+
 }

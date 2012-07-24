@@ -60,7 +60,8 @@ public class Library
             System.out.println(user.getUserName());
             return;
         }
-        System.out.println("Please talk to Librarian. Thank you.");
+        else
+            System.out.println("Please talk to Librarian. Thank you.");
     }
     
     
@@ -146,6 +147,7 @@ public class Library
             index++;
         }
         this.loggedInUsers.remove(index);
+        System.out.println("You are logged out.");
         user = null;
 
     }

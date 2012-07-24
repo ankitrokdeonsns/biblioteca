@@ -9,10 +9,10 @@ import java.io.PrintStream;
 
 public class UserTest
 {
-    @Test
+    @Test (expected = Exception.class)
     public void shouldNotEquateToNull()
     {
-        Assert.assertFalse(new User("person").equals(null));
+        new User("person").equals(null);
     }
 
     @Test

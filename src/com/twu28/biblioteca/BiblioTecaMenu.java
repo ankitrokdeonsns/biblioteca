@@ -15,13 +15,12 @@ import java.util.List;
 public class BiblioTecaMenu
 {
     List<String> items;
-    User loggedInUser;
+
     private BiblioTecaMenu(String... items)
     {
         this.items = new ArrayList<String>();
         for(String item: items)
             this.items.add(item);
-        this.loggedInUser = null;
 
     }
 
@@ -42,6 +41,7 @@ public class BiblioTecaMenu
                 "Reserve Book",
                 "Check library number",
                 "Display movie list",
+                "Logout",
                 "Exit");
     }
 
@@ -62,15 +62,16 @@ public class BiblioTecaMenu
         return true;
     }
 
-    public boolean processOption(BiblioTecaMenu menu, int optionNo, BufferedReader inputReader, Library library, boolean isUserLoggedIn) throws IOException
+    public User processOption(Main main, int optionNo, BufferedReader inputReader, Library library, User currentUser) throws IOException
     {
-        if(isUserLoggedIn)
-            return processOptionLoggedIn(menu, optionNo, inputReader, library, isUserLoggedIn);
-        return processOptionLoggedOut(menu, optionNo, inputReader, library, isUserLoggedIn);
+        if(main.isUserLoggedIn())
+            return processOptionLoggedIn(main, optionNo, inputReader, library, currentUser);
+        else
+            return processOptionLoggedOut(main, optionNo, inputReader, library, currentUser);
 
     }
 
-    private boolean processOptionLoggedOut(BiblioTecaMenu menu, int optionNo, BufferedReader inputReader, Library library, boolean isUserLoggedIn) throws IOException
+    private User processOptionLoggedOut(Main main, int optionNo, BufferedReader inputReader, Library library, User currentUser) throws IOException
     {
         switch (optionNo)
         {
@@ -89,7 +90,7 @@ public class BiblioTecaMenu
             }
             case 3:
             {
-                library.checkLibraryNumber(this.loggedInUser);
+                library.checkLibraryNumber(currentUser);
                 break;
             }
             case 4:
@@ -103,9 +104,10 @@ public class BiblioTecaMenu
                 String username = inputReader.readLine();
                 System.out.println("Please provide password:");
                 String password = inputReader.readLine();
-                this.loggedInUser = library.logIn(username, password);
-                if(this.loggedInUser != null)
-                    isUserLoggedIn = true;
+                currentUser = library.logIn(username, password);
+                if(currentUser != null)
+                    main.userLoggedIn();
+
                 break;
             }
             case 6:
@@ -114,10 +116,10 @@ public class BiblioTecaMenu
                 break;
             }
         }
-        return isUserLoggedIn;
+        return currentUser;
     }
 
-    private boolean processOptionLoggedIn(BiblioTecaMenu menu, int optionNo, BufferedReader inputReader, Library library, boolean isUserLoggedIn) throws IOException
+    private User processOptionLoggedIn(Main main, int optionNo, BufferedReader inputReader, Library library, User currentUser) throws IOException
     {
         switch (optionNo)
         {
@@ -136,7 +138,7 @@ public class BiblioTecaMenu
             }
             case 3:
             {
-                library.checkLibraryNumber(this.loggedInUser);
+                library.checkLibraryNumber(currentUser);
                 break;
             }
             case 4:
@@ -146,11 +148,17 @@ public class BiblioTecaMenu
             }
             case 5:
             {
+                library.logOut(currentUser);
+                main.userLoggedOut();
+                break;
+            }
+            case 6:
+            {
                 System.exit(0);
                 break;
             }
         }
-        return isUserLoggedIn;
+        return currentUser;
     }
 
 
